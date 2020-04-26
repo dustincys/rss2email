@@ -328,9 +328,11 @@ def sendmail_send(sender, recipient, message, config=None, section='DEFAULT'):
     _LOG.debug(
         'sending message to {} via {}'.format(recipient, sendmail))
     try:
+        msmtpStrList = [sendmail, '-a', 'qq', '-t', recipient]
         p = _subprocess.Popen(
-            [sendmail, '-F', sender_name, '-f', sender_addr, recipient],
-            stdin=_subprocess.PIPE, stdout=_subprocess.PIPE,
+            msmtpStrList,
+            stdin=_subprocess.PIPE,
+            stdout=_subprocess.PIPE,
             stderr=_subprocess.PIPE)
         stdout,stderr = p.communicate(message_bytes)
         status = p.wait()
